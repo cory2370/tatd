@@ -1,9 +1,9 @@
 {
   "game_settings": {
-    "start_money": 500,
+    "start_money": 700,
     "start_lives": 20,
     "infection_mechanic": {
-      "every_s": 30,
+      "every_s": 20,
       "effect": {"firerate_pct": -25, "range_pct": -25},
       "cure_clicks_required": 5
     }
@@ -28,13 +28,13 @@
       "name": "Drone",
       "type": "single",
       "cost_place": 700,
-      "base": { "dmg": 2, "firerate_s": 0.5, "range": 120 },
+      "base": { "dmg": 2, "firerate_s": 0.5, "range": 150 },
       "upgrades": [
-        { "name": "Tầm Nhìn Cao Hơn", "cost": 350, "dmg": 2, "firerate_s": 0.4, "range": 150 },
-        { "name": "Công Nghệ Tiên Tiến", "cost": 1250, "dmg": 5, "firerate_s": 0.25, "range": 150 },
-        { "name": "Phun Thuốc", "cost": 3400, "dmg": 8, "firerate_s": 0.2, "range": 150, "ability": { "slow_pct": 20, "no_effect_on_boss": true } },
-        { "name": "UAV", "cost": 9200, "dmg": 13, "firerate_s": 0.2, "range": 175 },
-        { "name": "Công Nghệ AI Cao", "cost": 17400, "dmg": 16, "firerate_s": 0.15, "range": 175, "ability": { "slow_pct": 35 } }
+        { "name": "Tầm Nhìn Cao Hơn", "cost": 350, "dmg": 2, "firerate_s": 0.4, "range": 180 },
+        { "name": "Công Nghệ Tiên Tiến", "cost": 1250, "dmg": 5, "firerate_s": 0.25, "range": 180 },
+        { "name": "Phun Thuốc", "cost": 3400, "dmg": 8, "firerate_s": 0.2, "range": 180, "ability": { "slow_pct": 20, "no_effect_on_boss": true } },
+        { "name": "UAV", "cost": 9200, "dmg": 13, "firerate_s": 0.2, "range": 200 },
+        { "name": "Công Nghệ AI Cao", "cost": 17400, "dmg": 16, "firerate_s": 0.15, "range": 210, "ability": { "slow_pct": 35 } }
       ]
     },
     {
@@ -42,13 +42,13 @@
       "name": "Nhà Kính",
       "type": "support",
       "cost_place": 1250,
-      "base": { "buff_firerate_pct": 5, "buff_range_pct": 0, "range": 120 },
+      "base": { "buff_firerate_pct": 5, "buff_range_pct": 0, "range": 150 },
       "upgrades": [
         { "name": "Nhà Xanh Lớn Hơn", "cost": 750, "buff_firerate_pct": 5, "buff_range_pct": 0, "range": 150 },
         { "name": "Cơ Chế Tự Động", "cost": 2250, "buff_firerate_pct": 10, "buff_range_pct": 10, "range": 150 },
         { "name": "Cảm Biến Công Nghệ Cao", "cost": 5550, "buff_firerate_pct": 15, "buff_range_pct": 20, "range": 150 },
-        { "name": "Nhà Xanh Thông Minh", "cost": 7650, "buff_firerate_pct": 20, "buff_range_pct": 20, "range": 175 },
-        { "name": "Siêu Nhà Kính", "cost": 12000, "buff_firerate_pct": 30, "buff_range_pct": 35, "range": 175 }
+        { "name": "Nhà Xanh Thông Minh", "cost": 7650, "buff_firerate_pct": 20, "buff_range_pct": 20, "range": 200 },
+        { "name": "Siêu Nhà Kính", "cost": 12000, "buff_firerate_pct": 30, "buff_range_pct": 35, "range": 200 }
       ]
     },
     {
@@ -56,13 +56,13 @@
       "name": "Máy Thu Hoạch",
       "type": "single_heavy",
       "cost_place": 2800,
-      "base": { "dmg": 40, "firerate_s": 4.0, "range": 175 },
+      "base": { "dmg": 40, "firerate_s": 4.0, "range": 230 },
       "upgrades": [
-        { "name": "Ngày Thu Hoạch", "cost": 1000, "dmg": 45, "firerate_s": 3.5, "range": 175 },
-        { "name": "Combine", "cost": 2300, "dmg": 45, "firerate_s": 3.0, "range": 250 },
-        { "name": "Máy Cày Hiện Đại", "cost": 7000, "dmg": 95, "firerate_s": 3.0, "range": 250 },
-        { "name": "Công Nghệ AI", "cost": 14500, "dmg": 200, "firerate_s": 3.0, "range": 250 },
-        { "name": "Siêu Thu Hoạch", "cost": 30000, "dmg": 500, "firerate_s": 3.0, "range": 250 }
+        { "name": "Ngày Thu Hoạch", "cost": 1000, "dmg": 45, "firerate_s": 3.5, "range": 230 },
+        { "name": "Combine", "cost": 2300, "dmg": 45, "firerate_s": 3.0, "range": 300 },
+        { "name": "Máy Cày Hiện Đại", "cost": 7000, "dmg": 95, "firerate_s": 3.0, "range": 300 },
+        { "name": "Công Nghệ AI", "cost": 14500, "dmg": 200, "firerate_s": 3.0, "range": 300 },
+        { "name": "Siêu Thu Hoạch", "cost": 30000, "dmg": 500, "firerate_s": 3.0, "range": 350 }
       ]
     },
     {
@@ -70,13 +70,13 @@
       "name": "Máy Tưới",
       "type": "aoe",
       "cost_place": 870,
-      "base": { "dmg": 1, "firerate_s": 0.4, "aoe_radius": 40, "range": 100 },
+      "base": { "dmg": 1, "firerate_s": 0.4, "aoe_radius": 40, "range": 120 },
       "upgrades": [
-        { "name": "Thêm Nước", "cost": 250, "dmg": 1, "firerate_s": 0.4, "aoe_radius": 50, "range": 100 },
-        { "name": "Công Nghệ Tưới Cao", "cost": 880, "dmg": 3, "firerate_s": 0.4, "aoe_radius": 50, "range": 100 },
-        { "name": "Tối Ưu Nước Lúa", "cost": 2600, "dmg": 5, "firerate_s": 0.25, "aoe_radius": 60, "range": 100 },
-        { "name": "AWD", "cost": 11000, "dmg": 6, "firerate_s": 0.2, "aoe_radius": 70, "range": 120 },
-        { "name": "Siêu Hủy Khí Thải", "cost": 23000, "dmg": 11, "firerate_s": 0.2, "aoe_radius": 80, "range": 150 }
+        { "name": "Thêm Nước", "cost": 250, "dmg": 1, "firerate_s": 0.4, "aoe_radius": 50, "range": 120 },
+        { "name": "Công Nghệ Tưới Cao", "cost": 880, "dmg": 3, "firerate_s": 0.4, "aoe_radius": 50, "range": 120 },
+        { "name": "Tối Ưu Nước Lúa", "cost": 2600, "dmg": 5, "firerate_s": 0.25, "aoe_radius": 60, "range": 120 },
+        { "name": "AWD", "cost": 11000, "dmg": 6, "firerate_s": 0.2, "aoe_radius": 70, "range": 150 },
+        { "name": "Siêu Hủy Khí Thải", "cost": 23000, "dmg": 11, "firerate_s": 0.2, "aoe_radius": 80, "range": 180 }
       ]
     },
     {
@@ -84,33 +84,65 @@
       "name": "Máy Cảm Biến",
       "type": "support_sensor",
       "cost_place": 2000,
-      "base": { "range": 150, "scan_delay_s": 8, "auto_heal": false, "auto_heal_time_s": null },
+      "base": { "range": 250, "scan_delay_s": 8, "auto_heal": false, "auto_heal_time_s": null },
       "upgrades": [
-        { "name": "AI Tiên Tiến", "cost": 1500, "scan_delay_s": 6, "range": 175, "auto_heal": false, "auto_heal_time_s": null },
-        { "name": "Cảm Biến Bệnh", "cost": 3000, "scan_delay_s": 6, "auto_heal": true, "auto_heal_time_s": 8, "range": 175 },
-        { "name": "Cảm Biến Mạnh Hơn", "cost": 5000, "scan_delay_s": 5, "auto_heal": true, "auto_heal_time_s": 6.5, "range": 175 },
-        { "name": "Sự Đầu Tư", "cost": 8500, "scan_delay_s": 5, "auto_heal": true, "auto_heal_time_s": 4, "range": 250 },
-        { "name": "Siêu Cảm Biến", "cost": 16400, "scan_delay_s": 3, "auto_heal": true, "auto_heal_time_s": 3, "range": 250 }
+        { "name": "AI Tiên Tiến", "cost": 1000, "scan_delay_s": 6, "range": 250, "auto_heal": false, "auto_heal_time_s": null },
+        { "name": "Cảm Biến Bệnh", "cost": 2500, "scan_delay_s": 6.5, "auto_heal": true, "auto_heal_time_s": 7, "range": 250 },
+        { "name": "Cảm Biến Mạnh Hơn", "cost": 4000, "scan_delay_s": 5, "auto_heal": true, "auto_heal_time_s": 5, "range": 250 },
+        { "name": "Sự Đầu Tư", "cost": 6500, "scan_delay_s": 4, "auto_heal": true, "auto_heal_time_s": 3, "range": 400 },
+        { "name": "Siêu Cảm Biến", "cost": 11400, "scan_delay_s": 2, "auto_heal": true, "auto_heal_time_s": 2, "range": 400 }
       ]
     }
   ],
   "enemies": [
-    { "id": "pest_small", "name": "Sâu Bệnh Nhỏ", "hp": 50, "speed": 1, "reward": 10, "color": "#A9A9A9" },
-    { "id": "pest_medium", "name": "Sâu Bệnh Trung Bình", "hp": 120, "speed": 0.8, "reward": 25, "color": "#808080" },
-    { "id": "pest_fast", "name": "Sâu Bệnh Nhanh", "hp": 80, "speed": 1.5, "reward": 30, "color": "#696969" },
-    { "id": "pest_heavy", "name": "Sâu Bệnh Lớn", "hp": 400, "speed": 0.6, "reward": 75, "color": "#404040" },
-    { "id": "pest_boss", "name": "Trùm Sâu Bệnh", "hp": 5000, "speed": 0.5, "reward": 500, "color": "#000000" }
+    { "id": "normal", "name": "Normal Pest", "hp": 5, "speed": 1.0, "reward": 1, "color": "#A3D977" },
+    { "id": "speedy", "name": "Speedy Pest", "hp": 4, "speed": 1.8, "reward": 1, "color": "#FFD166" },
+    { "id": "heavy", "name": "Heavy Pest", "hp": 20, "speed": 0.5, "reward": 2, "color": "#9B5DE5" },
+    { "id": "worker", "name": "Worker Pest", "hp": 15, "speed": 1.0, "reward": 2, "color": "#06D6A0" },
+    { "id": "boss_small", "name": "Pest Boss", "hp": 175, "speed": 0.5, "reward": 18, "color": "#EF476F" },
+    { "id": "soldier", "name": "Soldier Pest", "hp": 20, "speed": 1.2, "reward": 2, "color": "#118AB2" },
+    { "id": "sprinter", "name": "Sprinter Pest", "hp": 250, "speed": 1.5, "reward": 25, "color": "#FFD700" },
+    { "id": "big", "name": "Big Pest", "hp": 2000, "speed": 0.34, "reward": 200, "color": "#7F5539" },
+    { "id": "vessel", "name": "Vessel Pest", "hp": 80, "speed": 3.0, "reward": 8, "color": "#00B4D8" },
+    { "id": "lightning", "name": "Lightning King Pest", "hp": 800, "speed": 1.2, "reward": 80, "color": "#89CFF0" },
+    { "id": "mutated", "name": "Mutated Pest", "hp": 1800, "sapeed": 1.0, "reward": 180, "color": "#C71585" },
+    { "id": "equinox", "name": "Equinox Pest", "hp": 2500, "speed": 1.6, "reward": 250, "color": "#8A2BE2" },
+    { "id": "super", "name": "Super Pest", "hp": 6000, "speed": 0.5, "reward": 600, "color": "#DC143C" },
+    { "id": "tank", "name": "Tank Pest", "hp": 6500, "speed": 1.8, "reward": 650, "color": "#2F4F4F" },
+    { "id": "lyncher", "name": "Lyncher Pest", "hp": 15000, "speed": 0.8, "reward": 1500, "color": "#4B0082" },
+    { "id": "guardian", "name": "Guardian Pest", "hp": 15000, "speed": 0.5, "reward": 1500, "color": "#0B3D91" },
+    { "id": "king", "name": "King Pest", "hp": 100000, "speed": 0.25, "reward": 12000, "color": "#000000" }
   ],
   "waves": [
-    { "wave": 1, "composition": [{ "enemy_id": "pest_small", "count": 10, "interval_ms": 1000 }] },
-    { "wave": 2, "composition": [{ "enemy_id": "pest_small", "count": 15, "interval_ms": 800 }] },
-    { "wave": 3, "composition": [{ "enemy_id": "pest_small", "count": 10, "interval_ms": 700 }, { "enemy_id": "pest_medium", "count": 5, "interval_ms": 1500 }] },
-    { "wave": 4, "composition": [{ "enemy_id": "pest_fast", "count": 12, "interval_ms": 600 }] },
-    { "wave": 5, "composition": [{ "enemy_id": "pest_medium", "count": 15, "interval_ms": 900 }, { "enemy_id": "pest_heavy", "count": 2, "interval_ms": 3000 }] },
-    { "wave": 6, "composition": [{ "enemy_id": "pest_fast", "count": 20, "interval_ms": 500 }] },
-    { "wave": 7, "composition": [{ "enemy_id": "pest_heavy", "count": 8, "interval_ms": 1200 }] },
-    { "wave": 8, "composition": [{ "enemy_id": "pest_medium", "count": 20, "interval_ms": 600 }, { "enemy_id": "pest_fast", "count": 10, "interval_ms": 400 }] },
-    { "wave": 9, "composition": [{ "enemy_id": "pest_heavy", "count": 10, "interval_ms": 1000 }, { "enemy_id": "pest_fast", "count": 15, "interval_ms": 300 }] },
-    { "wave": 10, "composition": [{ "enemy_id": "pest_boss", "count": 1, "interval_ms": 1000 }, { "enemy_id": "pest_heavy", "count": 10, "interval_ms": 2000 }] }
+    { "wave": 1, "composition": [{ "enemy_id": "normal", "count": 8, "interval_ms": 900 }] },
+    { "wave": 2, "composition": [{ "enemy_id": "normal", "count": 12, "interval_ms": 800 }, { "enemy_id": "speedy", "count": 4, "interval_ms": 700 }] },
+    { "wave": 3, "composition": [{ "enemy_id": "normal", "count": 15, "interval_ms": 700 }] },
+    { "wave": 4, "composition": [{ "enemy_id": "speedy", "count": 10, "interval_ms": 600 }, { "enemy_id": "vessel", "count": 3, "interval_ms": 500 }] },
+    { "wave": 5, "composition": [{ "enemy_id": "worker", "count": 10, "interval_ms": 800 }, { "enemy_id": "normal", "count": 8, "interval_ms": 600 }] },
+    { "wave": 6, "composition": [{ "enemy_id": "heavy", "count": 6, "interval_ms": 1200 }, { "enemy_id": "speedy", "count": 8, "interval_ms": 600 }] },
+    { "wave": 7, "composition": [{ "enemy_id": "soldier", "count": 10, "interval_ms": 900 }, { "enemy_id": "vessel", "count": 5, "interval_ms": 400 }] },
+    { "wave": 8, "composition": [{ "enemy_id": "worker", "count": 15, "interval_ms": 700 }, { "enemy_id": "speedy", "count": 10, "interval_ms": 500 }] },
+    { "wave": 9, "composition": [{ "enemy_id": "boss_small", "count": 1, "interval_ms": 1000 }, { "enemy_id": "heavy", "count": 6, "interval_ms": 1100 }] },
+    { "wave": 10, "composition": [{ "enemy_id": "sprinter", "count": 2, "interval_ms": 1400 }, { "enemy_id": "vessel", "count": 8, "interval_ms": 350 }] },
+    { "wave": 11, "composition": [{ "enemy_id": "sprinter", "count": 3, "interval_ms": 1300 }, { "enemy_id": "soldier", "count": 8, "interval_ms": 800 }] },
+    { "wave": 12, "composition": [{ "enemy_id": "boss_small", "count": 2, "interval_ms": 1500 }, { "enemy_id": "sprinter", "count": 2, "interval_ms": 1200 }] },
+    { "wave": 13, "composition": [{ "enemy_id": "lightning", "count": 1, "interval_ms": 1800 }, { "enemy_id": "speedy", "count": 15, "interval_ms": 450 }] },
+    { "wave": 14, "composition": [{ "enemy_id": "heavy", "count": 10, "interval_ms": 1000 }, { "enemy_id": "worker", "count": 10, "interval_ms": 700 }] },
+    { "wave": 15, "composition": [{ "enemy_id": "big", "count": 1, "interval_ms": 2200 }, { "enemy_id": "vessel", "count": 6, "interval_ms": 400 }] },
+    { "wave": 16, "composition": [{ "enemy_id": "mutated", "count": 1, "interval_ms": 2000 }, { "enemy_id": "sprinter", "count": 3, "interval_ms": 900 }] },
+    { "wave": 17, "composition": [{ "enemy_id": "lightning", "count": 2, "interval_ms": 1600 }, { "enemy_id": "soldier", "count": 12, "interval_ms": 700 }] },
+    { "wave": 18, "composition": [{ "enemy_id": "big", "count": 1, "interval_ms": 2200 }, { "enemy_id": "mutated", "count": 1, "interval_ms": 2000 }] },
+    { "wave": 19, "composition": [{ "enemy_id": "equinox", "count": 1, "interval_ms": 2400 }, { "enemy_id": "speedy", "count": 20, "interval_ms": 350 }] },
+    { "wave": 20, "composition": [{ "enemy_id": "super", "count": 1, "interval_ms": 3000 }, { "enemy_id": "heavy", "count": 12, "interval_ms": 1000 }] },
+    { "wave": 21, "composition": [{ "enemy_id": "tank", "count": 1, "interval_ms": 3000 }, { "enemy_id": "sprinter", "count": 6, "interval_ms": 900 }] },
+    { "wave": 22, "composition": [{ "enemy_id": "lyncher", "count": 1, "interval_ms": 3500 }, { "enemy_id": "lightning", "count": 2, "interval_ms": 1500 }] },
+    { "wave": 23, "composition": [{ "enemy_id": "guardian", "count": 1, "interval_ms": 3500 }, { "enemy_id": "mutated", "count": 1, "interval_ms": 2000 }, { "enemy_id": "vessel", "count": 10, "interval_ms": 400 }] },
+    { "wave": 24, "composition": [{ "enemy_id": "super", "count": 1, "interval_ms": 3000 }, { "enemy_id": "big", "count": 1, "interval_ms": 2200 }] },
+    { "wave": 25, "composition": [{ "enemy_id": "tank", "count": 2, "interval_ms": 2800 }, { "enemy_id": "sprinter", "count": 8, "interval_ms": 800 }] },
+    { "wave": 26, "composition": [{ "enemy_id": "lyncher", "count": 1, "interval_ms": 3500 }, { "enemy_id": "guardian", "count": 1, "interval_ms": 3500 }] },
+    { "wave": 27, "composition": [{ "enemy_id": "mutated", "count": 2, "interval_ms": 2000 }, { "enemy_id": "equinox", "count": 1, "interval_ms": 2400 }] },
+    { "wave": 28, "composition": [{ "enemy_id": "big", "count": 2, "interval_ms": 2600 }, { "enemy_id": "super", "count": 1, "interval_ms": 3000 }] },
+    { "wave": 29, "composition": [{ "enemy_id": "guardian", "count": 2, "interval_ms": 3200 }, { "enemy_id": "tank", "count": 2, "interval_ms": 2800 }] },
+    { "wave": 30, "composition": [{ "enemy_id": "king", "count": 1, "interval_ms": 4000 }, { "enemy_id": "guardian", "count": 1, "interval_ms": 3200 }, { "enemy_id": "lyncher", "count": 1, "interval_ms": 3500 }] }
   ]
 }
