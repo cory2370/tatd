@@ -3,18 +3,19 @@
 
 import { path, isPointNearLine } from './config.js';
 import { Enemy, Tower, Projectile } from './entities.js';
-import { 
-    initUI, 
-    updateTopBar, 
-    showTowerInfo, 
-    showNotification, 
-    showWaveSummary, 
-    showFinalReflection, 
-    showGameOver, 
+import {
+    initUI,
+    updateTopBar,
+    showTowerInfo,
+    showNotification,
+    showWaveSummary,
+    showFinalReflection,
+    showGameOver,
     hideMainMenu,
     updateTowerSelection,
-    setStartWaveButtonState 
+    setStartWaveButtonState
 } from './ui.js';
+import cheatCodes from './cheatcodes.js';
 
 // Game states enum
 const GameStates = {
@@ -38,28 +39,28 @@ class GameState {
     reset() {
         // Game data
         this.gameData = null;
-        
+
         // Resources
         this.money = 500;
         this.lives = 20;
-        
+
         // Wave management
         this.currentWave = 0;
         this.waveInProgress = false;
-        
+
         // Entities
         this.enemies = [];
         this.towers = [];
         this.projectiles = [];
-        
+
         // Selection state
         this.selectedTower = null;
         this.placingTowerType = null;
-        
+
         // Input state
         this.mousePos = { x: 0, y: 0 };
         this.validPlacement = false;
-        
+
         // Statistics
         this.gameStats = {
             moneyEarned: 0,
@@ -77,7 +78,7 @@ class GameState {
         this.money = gameData.game_settings.start_money;
         this.lives = gameData.game_settings.start_lives;
         this.gameStats.moneyEarned = this.money;
-        
+
         // Initialize damage tracking
         gameData.towers.forEach(tower => {
             this.gameStats.damageDealt[tower.id] = 0;
@@ -116,7 +117,7 @@ class RenderManager {
         this.ctx = canvas.getContext('2d');
         // Delay resize to ensure DOM is ready
         setTimeout(() => this.resizeCanvas(), 0);
-        
+
         // Bind resize handler
         this.handleResize = this.resizeCanvas.bind(this);
         window.addEventListener('resize', this.handleResize);
@@ -129,12 +130,12 @@ class RenderManager {
             const rect = parent.getBoundingClientRect();
             this.canvas.width = rect.width || 800; // Fallback width
             this.canvas.height = rect.height || 600; // Fallback height
-            
+
             // Update path endpoint to match canvas
             if (path.length > 0) {
                 path[path.length - 1].x = this.canvas.width + 50;
             }
-            
+
             console.log('Canvas resized to:', this.canvas.width, 'x', this.canvas.height);
         }
     }
@@ -143,7 +144,7 @@ class RenderManager {
         // Clear canvas with background color
         this.ctx.fillStyle = '#8FBC8F';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-        
+
         // Render layers in order
         this.drawPath();
         this.drawPlacementGhost(gameState);
@@ -155,7 +156,7 @@ class RenderManager {
 
     drawPath() {
         const ctx = this.ctx;
-        
+
         // Draw outer path border
         ctx.strokeStyle = '#D2B48C';
         ctx.lineWidth = 50;
@@ -167,7 +168,7 @@ class RenderManager {
             if (i > 0) ctx.lineTo(point.x, point.y);
         });
         ctx.stroke();
-        
+
         // Draw inner path
         ctx.strokeStyle = '#A0522D';
         ctx.lineWidth = 44;
@@ -181,16 +182,16 @@ class RenderManager {
 
     drawPlacementGhost(gameState) {
         if (!gameState.placingTowerType || !gameState.mousePos) return;
-        
+
         const towerData = gameState.gameData.towers.find(
             t => t.id === gameState.placingTowerType
         );
         if (!towerData) return;
-        
+
         const ctx = this.ctx;
         const { x, y } = gameState.mousePos;
         const canPlace = gameState.validPlacement;
-        
+
         // Tower placement indicator
         ctx.beginPath();
         ctx.arc(x, y, 20, 0, Math.PI * 2);
@@ -199,7 +200,7 @@ class RenderManager {
         ctx.strokeStyle = canPlace ? 'green' : 'red';
         ctx.lineWidth = 2;
         ctx.stroke();
-        
+
         // Range indicator
         ctx.beginPath();
         ctx.arc(x, y, towerData.base.range || 100, 0, Math.PI * 2);
@@ -238,7 +239,7 @@ class RenderManager {
                 ctx.font = 'bold 14px sans-serif';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                
+
                 const required = gameState.gameData.game_settings.infection_mechanic.cure_clicks_required;
                 ctx.fillText(
                     `${tower.infectionCureClicks}/${required}`,
@@ -263,7 +264,7 @@ class InputManager {
         this.canvas = canvas;
         this.gameState = gameState;
         this.gameManager = gameManager;
-        
+
         this.setupEventListeners();
     }
 
@@ -272,7 +273,7 @@ class InputManager {
         this.canvas.addEventListener('mousemove', this.handleMouseMove.bind(this));
         this.canvas.addEventListener('click', this.handleClick.bind(this));
         this.canvas.addEventListener('contextmenu', this.handleRightClick.bind(this));
-        
+
         // Keyboard shortcuts
         document.addEventListener('keydown', this.handleKeyDown.bind(this));
     }
@@ -281,7 +282,7 @@ class InputManager {
         const rect = this.canvas.getBoundingClientRect();
         this.gameState.mousePos.x = event.clientX - rect.left;
         this.gameState.mousePos.y = event.clientY - rect.top;
-        
+
         // Update placement validation
         if (this.gameState.placingTowerType) {
             this.gameState.validPlacement = this.gameManager.canPlaceTowerAt(
@@ -293,7 +294,7 @@ class InputManager {
 
     handleClick(event) {
         const { x, y } = this.gameState.mousePos;
-        
+
         if (this.gameState.placingTowerType) {
             this.gameManager.placeTower(x, y);
         } else {
@@ -303,20 +304,20 @@ class InputManager {
 
     handleRightClick(event) {
         event.preventDefault();
-        
+
         if (this.gameState.placingTowerType) {
             // Cancel placement
             this.gameManager.cancelTowerPlacement();
             return;
         }
-        
+
         // Try to cure infected tower
         const { x, y } = this.gameState.mousePos;
         this.gameManager.tryClickCure(x, y);
     }
 
     handleKeyDown(event) {
-        switch(event.key) {
+        switch (event.key) {
             case 'Escape':
                 if (this.gameState.placingTowerType) {
                     this.gameManager.cancelTowerPlacement();
@@ -351,16 +352,16 @@ class WaveManager {
     startWave(waveNumber) {
         const waveData = this.gameState.gameData.waves[waveNumber - 1];
         if (!waveData) return false;
-        
+
         this.spawnQueue = [];
-        
+
         // Build spawn queue
         waveData.composition.forEach(group => {
             const enemyData = this.gameState.gameData.enemies.find(
                 e => e.id === group.enemy_id
             );
             if (!enemyData) return;
-            
+
             for (let i = 0; i < group.count; i++) {
                 this.spawnQueue.push({
                     enemyData: enemyData,
@@ -368,16 +369,16 @@ class WaveManager {
                 });
             }
         });
-        
+
         this.spawnTimer = 0;
         return true;
     }
 
     update(deltaTime) {
         if (this.spawnQueue.length === 0) return;
-        
+
         this.spawnTimer += deltaTime;
-        
+
         // Spawn enemies whose time has come
         while (this.spawnQueue.length > 0 && this.spawnQueue[0].spawnTime <= this.spawnTimer) {
             const spawn = this.spawnQueue.shift();
@@ -404,7 +405,7 @@ class InfectionManager {
     initialize() {
         const settings = this.gameState.gameData.game_settings.infection_mechanic;
         if (!settings) return;
-        
+
         this.interval = settings.every_s;
         this.timer = 0;
         this.enabled = true;
@@ -412,9 +413,9 @@ class InfectionManager {
 
     update(deltaTime) {
         if (!this.enabled || !this.gameState.waveInProgress) return;
-        
+
         this.timer += deltaTime;
-        
+
         if (this.timer >= this.interval) {
             this.timer = 0;
             this.infectRandomTower();
@@ -422,12 +423,12 @@ class InfectionManager {
     }
 
     infectRandomTower() {
-        const eligible = this.gameState.towers.filter(t => 
+        const eligible = this.gameState.towers.filter(t =>
             !t.isInfected && t.type !== 'support_sensor'
         );
-        
+
         if (eligible.length === 0) return;
-        
+
         const tower = eligible[Math.floor(Math.random() * eligible.length)];
         tower.infect();
         this.gameState.gameStats.infectionsTotal++;
@@ -449,20 +450,20 @@ class GameManager {
         if (!this.canvas) {
             throw new Error('Canvas element not found');
         }
-        
+
         // Core systems
         this.gameState = new GameState();
         this.renderManager = new RenderManager(this.canvas);
         this.inputManager = null;
         this.waveManager = new WaveManager(this.gameState);
         this.infectionManager = new InfectionManager(this.gameState);
-        
+
         // Game flow
         this.currentState = GameStates.LOADING;
         this.lastTime = 0;
         this.animationFrameId = null;
         this.isPaused = false;
-        
+
         // UI handlers
         this.uiHandlers = {
             startGame: this.startGame.bind(this),
@@ -477,27 +478,28 @@ class GameManager {
         try {
             // Load game data
             await this.loadGameData();
-            
+
             // Initialize systems
             this.gameState.initialize(this.gameState.gameData);
             this.inputManager = new InputManager(this.canvas, this.gameState, this);
             this.infectionManager.initialize();
-            
+
             // Initialize UI
             initUI(this.gameState, this.uiHandlers);
             updateTopBar(this.gameState);
-            
+
+            // Initialize cheat codes (ADD THIS)
+            cheatCodes.init(this);
+
             // Force canvas resize after everything is loaded
             setTimeout(() => {
                 this.renderManager.resizeCanvas();
-                // Start initial render
                 this.renderManager.render(this.gameState);
             }, 100);
-            
-            // Ready to play
+
             this.currentState = GameStates.MENU;
             console.log('Game initialized successfully');
-            
+
         } catch (error) {
             console.error('Failed to initialize game:', error);
             showNotification('Lỗi tải game. Vui lòng tải lại trang.', true);
@@ -510,16 +512,16 @@ class GameManager {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            
+
             const data = await response.json();
-            
+
             // Validate data structure
             if (!data.towers || !data.enemies || !data.waves) {
                 throw new Error('Invalid game data structure');
             }
-            
+
             this.gameState.gameData = data;
-            
+
         } catch (error) {
             console.error('Error loading game data:', error);
             throw new Error('Could not load game data');
@@ -528,20 +530,20 @@ class GameManager {
 
     startGame() {
         if (this.currentState !== GameStates.MENU) return;
-        
+
         hideMainMenu();
         this.currentState = GameStates.WAVE_BREAK;
-        
+
         // Ensure canvas is properly sized
         this.renderManager.resizeCanvas();
-        
+
         this.startGameLoop();
         setStartWaveButtonState(true);
     }
 
     startGameLoop() {
         if (this.animationFrameId) return; // Already running
-        
+
         this.lastTime = performance.now();
         this.gameLoop(this.lastTime);
     }
@@ -550,17 +552,17 @@ class GameManager {
         // Calculate delta time
         const deltaTime = Math.min((timestamp - this.lastTime) / 1000, 0.1);
         this.lastTime = timestamp;
-        
+
         // Update game
         if (!this.isPaused) {
             this.update(deltaTime);
         }
-        
+
         // Render
         this.renderManager.render(this.gameState);
-        
+
         // Continue loop
-        if (this.currentState !== GameStates.GAME_OVER && 
+        if (this.currentState !== GameStates.GAME_OVER &&
             this.currentState !== GameStates.VICTORY) {
             this.animationFrameId = requestAnimationFrame(this.gameLoop.bind(this));
         } else {
@@ -573,7 +575,7 @@ class GameManager {
         if (!deltaTime || isNaN(deltaTime) || deltaTime <= 0) {
             deltaTime = 0.016; // Default to 60fps
         }
-        
+
         // Update based on state
         switch (this.currentState) {
             case GameStates.PLAYING:
@@ -584,7 +586,7 @@ class GameManager {
                 this.updateTowers(deltaTime);
                 break;
         }
-        
+
         // Always update UI
         updateTopBar(this.gameState);
     }
@@ -592,19 +594,19 @@ class GameManager {
     updateGameplay(deltaTime) {
         // Update infection system
         this.infectionManager.update(deltaTime);
-        
+
         // Update wave spawning
         this.waveManager.update(deltaTime);
-        
+
         // Update towers
         this.updateTowers(deltaTime);
-        
+
         // Update projectiles
         this.updateProjectiles(deltaTime);
-        
+
         // Update enemies
         this.updateEnemies(deltaTime);
-        
+
         // Check wave completion
         if (this.gameState.waveInProgress && this.waveManager.isComplete()) {
             this.waveComplete();
@@ -621,22 +623,22 @@ class GameManager {
         this.gameState.projectiles.forEach(projectile => {
             projectile.update(deltaTime, this.gameState);
         });
-        
+
         // Remove inactive projectiles
         this.gameState.projectiles = this.gameState.projectiles.filter(p => p.active);
     }
 
     updateEnemies(deltaTime) {
         const enemiesToRemove = [];
-        
+
         this.gameState.enemies.forEach(enemy => {
             enemy.update(deltaTime);
-            
+
             // Check if enemy reached end
             if (enemy.reachedEnd) {
                 enemiesToRemove.push(enemy);
                 const gameOver = this.gameState.takeDamage();
-                
+
                 if (gameOver) {
                     this.gameOver();
                 }
@@ -648,7 +650,7 @@ class GameManager {
                 this.gameState.gameStats.enemiesKilled++;
             }
         });
-        
+
         // Remove dead/finished enemies
         this.gameState.enemies = this.gameState.enemies.filter(
             enemy => !enemiesToRemove.includes(enemy)
@@ -657,17 +659,17 @@ class GameManager {
 
     startNextWave() {
         if (this.currentState !== GameStates.WAVE_BREAK) return;
-        
+
         this.gameState.currentWave++;
-        
+
         if (this.gameState.currentWave > this.gameState.gameData.waves.length) {
             this.victory();
             return;
         }
-        
+
         this.gameState.waveInProgress = true;
         this.currentState = GameStates.PLAYING;
-        
+
         if (this.waveManager.startWave(this.gameState.currentWave)) {
             setStartWaveButtonState(false);
             showNotification(`Đợt ${this.gameState.currentWave} bắt đầu!`);
@@ -681,9 +683,9 @@ class GameManager {
     waveComplete() {
         this.gameState.waveInProgress = false;
         this.currentState = GameStates.WAVE_BREAK;
-        
+
         showWaveSummary(this.gameState);
-        
+
         if (this.gameState.currentWave >= this.gameState.gameData.waves.length) {
             this.victory();
         } else {
@@ -709,10 +711,10 @@ class GameManager {
             this.cancelTowerPlacement();
             return;
         }
-        
+
         const towerData = this.gameState.gameData.towers.find(t => t.id === towerId);
         if (!towerData) return;
-        
+
         if (this.gameState.canAfford(towerData.cost_place)) {
             this.gameState.placingTowerType = towerId;
             this.gameState.selectedTower = null;
@@ -731,25 +733,25 @@ class GameManager {
 
     placeTower(x, y) {
         if (!this.gameState.placingTowerType) return;
-        
+
         const towerData = this.gameState.gameData.towers.find(
             t => t.id === this.gameState.placingTowerType
         );
         if (!towerData) return;
-        
+
         if (this.canPlaceTowerAt(x, y) && this.gameState.purchase(towerData.cost_place)) {
             // Create tower
             const tower = new Tower(x, y, this.gameState.placingTowerType, this.gameState.gameData);
             this.gameState.towers.push(tower);
             this.gameState.gameStats.towersPlaced++;
-            
+
             // Update all towers (for buff calculations)
             this.gameState.towers.forEach(t => t.applyStats(this.gameState.towers));
-            
+
             // Select the new tower
             this.gameState.selectedTower = tower;
             this.cancelTowerPlacement();
-            
+
             showTowerInfo(this.gameState, this.uiHandlers);
             updateTopBar(this.gameState);
         } else {
@@ -762,48 +764,48 @@ class GameManager {
         if (x < 20 || x > this.canvas.width - 20 || y < 20 || y > this.canvas.height - 20) {
             return false;
         }
-        
+
         // Check distance from path
         for (let i = 0; i < path.length - 1; i++) {
-            if (isPointNearLine({x, y}, path[i], path[i + 1], 45)) {
+            if (isPointNearLine({ x, y }, path[i], path[i + 1], 45)) {
                 return false;
             }
         }
-        
+
         // Check distance from other towers
         for (const tower of this.gameState.towers) {
             if (Math.hypot(x - tower.x, y - tower.y) < 40) {
                 return false;
             }
         }
-        
+
         return true;
     }
 
     selectTowerAt(x, y) {
-        const tower = this.gameState.towers.find(t => 
+        const tower = this.gameState.towers.find(t =>
             Math.hypot(x - t.x, y - t.y) < 25
         );
-        
+
         this.gameState.selectedTower = tower || null;
         showTowerInfo(this.gameState, this.uiHandlers);
     }
 
     upgradeTower(tower) {
         if (!tower) return;
-        
+
         const towerData = this.gameState.gameData.towers.find(t => t.id === tower.id);
         if (!towerData || tower.level >= towerData.upgrades.length) return;
-        
+
         const upgradeCost = towerData.upgrades[tower.level].cost;
-        
+
         if (this.gameState.purchase(upgradeCost)) {
             tower.upgrade(this.gameState.towers);
             this.gameState.gameStats.towersUpgraded++;
-            
+
             // Reapply buffs to all towers
             this.gameState.towers.forEach(t => t.applyStats(this.gameState.towers));
-            
+
             showTowerInfo(this.gameState, this.uiHandlers);
             updateTopBar(this.gameState);
         } else {
@@ -813,33 +815,33 @@ class GameManager {
 
     sellTower(tower) {
         if (!tower) return;
-        
+
         const sellValue = Math.floor(tower.totalCost * 0.7);
         this.gameState.earnMoney(sellValue);
-        
+
         // Remove tower
         const index = this.gameState.towers.indexOf(tower);
         if (index > -1) {
             this.gameState.towers.splice(index, 1);
         }
-        
+
         // Clear selection if this was selected
         if (this.gameState.selectedTower === tower) {
             this.gameState.selectedTower = null;
         }
-        
+
         // Reapply buffs to remaining towers
         this.gameState.towers.forEach(t => t.applyStats(this.gameState.towers));
-        
+
         showTowerInfo(this.gameState, this.uiHandlers);
         updateTopBar(this.gameState);
     }
 
     tryClickCure(x, y) {
-        const tower = this.gameState.towers.find(t => 
+        const tower = this.gameState.towers.find(t =>
             Math.hypot(x - t.x, y - t.y) < 25 && t.isInfected
         );
-        
+
         if (tower) {
             tower.handleClickCure(this.gameState);
         }
@@ -858,7 +860,7 @@ class GameManager {
             cancelAnimationFrame(this.animationFrameId);
             this.animationFrameId = null;
         }
-        
+
         // Clean up managers
         if (this.inputManager) this.inputManager.cleanup();
         if (this.renderManager) this.renderManager.cleanup();
